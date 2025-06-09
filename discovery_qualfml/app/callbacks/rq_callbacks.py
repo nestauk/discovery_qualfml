@@ -32,10 +32,13 @@ def register_rq_callbacks(app):
         prevent_initial_call=True,
     )
     def run_analysis(n_clicks, session_id, colinfo, rq_text, test_mode):
-        if not (n_clicks and session_id and colinfo and rq_text):
+        if not (n_clicks and session_id):
             raise PreventUpdate
 
-        conversation_text_dict = format_transcripts(session_id, colinfo["conv_id"], text_col=colinfo["text"])
+        if colinfo:
+            conversation_text_dict = format_transcripts(session_id, colinfo["conv_id"], text_col=colinfo["text"])
+        else:
+            conversation_text_dict = format_transcripts(session_id)
 
         outdir = get_or_create_output_dir(session_id)
 
@@ -87,9 +90,6 @@ def register_rq_callbacks(app):
             return ""
         full_summary = pd.read_csv(os.path.join(outdir, "summarise_output_df.csv"))
 
-        # conversation_text_dict = format_transcripts(session_id, colinfo["conv_id"], text_col=colinfo["text"])
-
-        # uuid_col = colinfo["uuid"]
         children = []
         for _, q in rq_dict.items():
             temp = full_summary[full_summary["question"] == q]
@@ -133,7 +133,10 @@ def register_rq_callbacks(app):
 
         full_summary = pd.read_csv(os.path.join(outdir, "summarise_output_df.csv"))
 
-        conversation_text_dict = format_transcripts(session_id, colinfo["conv_id"], text_col=colinfo["text"])
+        if colinfo:
+            conversation_text_dict = format_transcripts(session_id, colinfo["conv_id"], text_col=colinfo["text"])
+        else:
+            conversation_text_dict = format_transcripts(session_id)
 
         temp_df = full_summary[full_summary["index"] == uid]
 

@@ -132,3 +132,7 @@ node_modules/
 *.utf8.md
 *.knit.md
 .Renviron
+
+# Project-specific things
+data/*
+outputs/*
