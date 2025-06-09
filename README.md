@@ -1,5 +1,7 @@
 # discovery_qualfml
 
+Code for Plotly Dash app for automatic analysis of qual data
+
 ## Setup
 
 This project uses [`uv`](https://docs.astral.sh/uv/) for virtual environment management. If you are new to `uv`, you can find the [quickstart guide here](https://docs.astral.sh/uv/getting-started/).
