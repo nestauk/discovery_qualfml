@@ -11,95 +11,16 @@ from dash import Input
 from dash import Output
 from dash import State
 from dash.exceptions import PreventUpdate
-from docx import Document
-
-from discovery_qualfml.utils.dash_utils import get_or_create_output_dir
 
 
-# def replace_punct(text: str) -> str:
-#     """
-#     Replaces or removes specific punctuation characters.
-
-#     Args:
-#         text (str): The text string to process.
-
-#     Returns:
-#         str: The cleaned text with replacements made.
-#     """
-#     if not isinstance(text, str):
-#         return ""
-
-#     text = (
-#         text.replace("&", "and")
-#         .replace("\xa0", " ")
-#         .replace("\r", ".")
-#         .replace("\n", ".")
-#         .replace("[", "")
-#         .replace("]", "")
-#     )
-
-#     return text.strip()
-
-
-# def clean_data(data_df: pd.DataFrame, text_col="text") -> pd.DataFrame:
-#     """
-#     Does minimal text cleaning on *tabular* data
-
-#     Args:
-#         data_df (pd.DataFrame): DataFrame containing conversation data, with at least 'text' and 'text_clean' columns.
-
-#     Returns:
-#         pd.DataFrame: Cleaned DataFrame with processed text.
-#     """
-
-#     data_df[text_col] = data_df[text_col].fillna("")
-
-#     data_df = data_df[data_df[text_col].astype(str).str.strip() != ""]
-
-#     # Fix improperly coded characters
-#     data_df["text_clean"] = data_df[text_col].apply(lambda x: ftfy.fix_text(x))
-
-#     # Remove emojis
-#     data_df["text_clean"] = data_df["text_clean"].apply(lambda x: emoji.demojize(x))
-
-#     # Replace punctuation
-#     data_df["text_clean"] = data_df["text_clean"].apply(replace_punct)
-
-#     return data_df
-
-
-def extract_text_from_docx(decoded_bytes):
-    doc = Document(io.BytesIO(decoded_bytes))
-    return "\n".join(p.text for p in doc.paragraphs if p.text.strip())
-
-
-def extract_text_from_txt(decoded_bytes):
-    return decoded_bytes.decode("utf-8")
-
-
-def extract_text_from_vtt(decoded_bytes):
-    lines = decoded_bytes.decode("utf-8").splitlines()
-    cleaned_lines = []
-    for line in lines:
-        line = line.strip()
-        if line == "" or "-->" in line or line.isdigit():
-            continue
-        cleaned_lines.append(line)
-    return "\n".join(cleaned_lines)
-
-
-# def chunk_text_lines(text, chunk_size=4, overlap=2):
-#     lines = [line.strip() for line in text.splitlines() if line.strip()]
-#     chunks = []
-#     for i in range(0, len(lines) - chunk_size + 1, chunk_size - overlap):
-#         chunk = "\n".join(lines[i:i + chunk_size])
-#         chunks.append(chunk)
-#     return chunks
-
-
-def make_session_id():
-    timestamp_prefix = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    return f"{timestamp_prefix}_{uuid.uuid4()}"
+from discovery_qualfml.utils.dash_utils import get_or_create_output_dir, make_session_id
+from discovery_qualfml.utils.file_processing import (
+    extract_text_from_docx,
+    extract_text_from_txt,
+    extract_text_from_vtt,
+    merge_consecutive_turns,
+    format_for_topic_modelling,
+)
 
 
 def register_upload_callbacks(app):
@@ -169,10 +90,14 @@ def register_upload_callbacks(app):
                     json.dump(entry, f)
                     f.write("\n")
 
+            tabular_data = format_for_topic_modelling(output_dir)
+            tabular_data.to_csv(os.path.join(output_dir, "topic_modelling_data.csv"), index=False)
+
         # Save tabular data to CSV if applicable
         if tabular_dfs:
             combined_df = pd.concat(tabular_dfs, ignore_index=True)
-            combined_df.to_csv(os.path.join(output_dir, "raw_combined_data.csv"), index=False)
+            print(combined_df.head())
+
         else:
             combined_df = pd.DataFrame()
 
@@ -224,7 +149,7 @@ def register_upload_callbacks(app):
         prevent_initial_call=True,
     )
     def save_columns_and_clean(n, json_data, conv_col, role_col, text_col, uuid_col, session_id):
-        if not (n and json_data and role_col and text_col and session_id):
+        if not (n and json_data and text_col and session_id):
             raise PreventUpdate
 
         df = pd.read_json(json_data, orient="split")
@@ -236,6 +161,25 @@ def register_upload_callbacks(app):
         if conv_col is None:
             conv_col = "source_file"
 
+        # Make sure all text items are strings, no NAs
+        df = df.dropna(subset=[text_col])
+
+        # Concatenate consecutive turns if applicable (needs a 'role' column,
+        # so that you only concatenate consecutive turns by the same speaker)
+        if conv_col and role_col and text_col:
+            df = merge_consecutive_turns(df, conv_col, role_col, text_col)
+
+        output_dir = get_or_create_output_dir(session_id)
+
+        df.to_csv(os.path.join(output_dir, "raw_combined_data.csv"), index=False)
+
         # Store columns mapping
         cols = {"conv_id": conv_col, "role": role_col, "text": text_col, "uuid": uuid_col}
+        print(f"Columns saved: {cols}")
+
+        topic_modelling_data = format_for_topic_modelling(
+            output_dir, role_col=role_col, conv_col=conv_col, text_col=text_col
+        )
+        topic_modelling_data.to_csv(os.path.join(output_dir, "topic_modelling_data.csv"), index=False)
+
         return ("✅ Cleaned data saved successfully!", cols)

@@ -14,6 +14,7 @@ license = { text = "MIT" }
 readme = "README.md"
 requires-python = "==3.12.*"
 dependencies = [
+    "bertopic>=0.17.0",
     "dash>=3.0.4",
     "dash-auth>=2.3.0",
     "dash-bootstrap-components>=2.0.3",

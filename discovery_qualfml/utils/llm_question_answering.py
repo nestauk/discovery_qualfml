@@ -70,6 +70,7 @@ def format_transcripts(session_id: str, conv_col: str = "source_file", text_col:
     elif Path(f"{session_dir}/raw_combined_data.csv").exists():
         print("tabular data")
         tabular_data = pd.read_csv(f"{session_dir}/raw_combined_data.csv")
+        tabular_data = tabular_data.dropna(subset=[text_col])
         conversation_text_dict = tabular_data.groupby(conv_col)[text_col].agg("\n".join).to_dict()
     else:
         print("error")

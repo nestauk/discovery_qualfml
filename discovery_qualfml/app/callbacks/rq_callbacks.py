@@ -28,10 +28,10 @@ def register_rq_callbacks(app):
         State("session-id", "data"),
         State("column-store", "data"),
         State("rq-textarea", "value"),
-        State("test-mode-toggle", "value"),
+        # State("test-mode-toggle", "value"),
         prevent_initial_call=True,
     )
-    def run_analysis(n_clicks, session_id, colinfo, rq_text, test_mode):
+    def run_analysis(n_clicks, session_id, colinfo, rq_text):
         if not (n_clicks and session_id):
             raise PreventUpdate
 
@@ -60,8 +60,8 @@ def register_rq_callbacks(app):
 
         btn = dbc.Button("Download Results", id="trigger-download", className="nesta-button")
         alert = dbc.Alert(
-            "Test mode: mock outputs" if test_mode else "LLM processing complete!",
-            color="info" if test_mode else "success",
+            "LLM processing complete!",
+            color="success",
         )
         return alert, output_paths, rq_dict, outdir, btn
 

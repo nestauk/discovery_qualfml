@@ -1,3 +1,4 @@
+# ruff: noqa
 import os
 
 import dash
@@ -6,7 +7,7 @@ import dash_bootstrap_components as dbc
 
 from callbacks.rq_callbacks import register_rq_callbacks
 
-# from callbacks.topic_modelling_callbacks import register_topic_callbacks
+from callbacks.topic_modelling_callbacks import register_topic_callbacks
 from callbacks.upload_callbacks import register_upload_callbacks
 from dash import Input
 from dash import Output
@@ -16,7 +17,7 @@ from dotenv import load_dotenv
 from layout.rq_tab import quotes_modal
 from layout.rq_tab import rq_tab
 
-# from layout.topic_mapping import topic_tab
+from layout.topic_mapping import topic_tab
 from layout.upload import upload_tab
 
 
@@ -50,14 +51,14 @@ app.layout = html.Div(
                     value="tab-upload",
                     children=[
                         dcc.Tab(label="1. Upload data ⬆️", value="tab-upload"),
-                        # dcc.Tab(label="2. Deductive / topic mapping analysis 🔸", value="tab-topic"),
+                        dcc.Tab(label="2. Deductive / topic mapping analysis 🕸️", value="tab-topic"),
                         dcc.Tab(label="3. Inductive / framework analysis 🔍", value="tab-rq"),
                     ],
                 ),
                 html.Div(
                     [
                         upload_tab,
-                        #   topic_tab,
+                        topic_tab,
                         rq_tab,
                     ]
                 ),
@@ -72,20 +73,20 @@ app.layout = html.Div(
 
 @app.callback(
     Output("tab-upload", "style"),
-    # Output("tab-topic", "style"),
+    Output("tab-topic", "style"),
     Output("tab-rq", "style"),
     Input("tabs", "value"),
 )
 def switch_tab(tab):
     return (
         {"display": "block"} if tab == "tab-upload" else {"display": "none"},
-        # {"display": "block"} if tab == "tab-topic" else {"display": "none"},
+        {"display": "block"} if tab == "tab-topic" else {"display": "none"},
         {"display": "block"} if tab == "tab-rq" else {"display": "none"},
     )
 
 
 register_upload_callbacks(app)
-# register_topic_callbacks(app)
+register_topic_callbacks(app)
 register_rq_callbacks(app)
 
 if __name__ == "__main__":

@@ -47,8 +47,6 @@ rq_tab = html.Div(
                     placeholder="Enter RQs, one per line...",
                     style={"width": "100%", "height": "150px", "marginBottom": "1rem"},
                 ),
-                dbc.Checkbox(id="test-mode-toggle", label="Run in test mode (no LLM calls)", value=True),
-                html.Br(),
                 dbc.Button("Run Analysis", id="run-analysis", className="mt-2 nesta-button"),
                 html.Div(id="download-btn-container"),
                 html.Br(),
