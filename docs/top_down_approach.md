@@ -15,6 +15,8 @@ Between steps (1) and (2), and between (3) and displaying the output in the app,
 
 # Specific functions called
 
+**See the notebook `discovery_qualfml/demos/research_questions_tab.ipynb` to explore these functions with dummy data.**
+
 The functions that are used internally for the research question answering functionality are as follows:
 
 - `parse_rqs()`: creates a Dict mapping an ID for each research question to the question text itself. The ID contains a timestamp so that if the user changes the question, a new ID is generated.
