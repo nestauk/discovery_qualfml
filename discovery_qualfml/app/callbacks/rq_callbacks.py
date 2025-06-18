@@ -171,6 +171,10 @@ def register_rq_callbacks(app):
             return insert_linebreaks(before) + [html.Mark(highlight_quote)] + insert_linebreaks(after)
 
         body = html.Div(
-            children=highlight_quote(transcript_dict=conversation_text_dict, doc_id=doc_id, highlight_quote=quote)
+            [
+                html.P(f"Conversation/file ID: {doc_id}", style={"fontWeight": "bold", "marginBottom": "1rem"}),
+                # unpack list into outer list
+                *highlight_quote(transcript_dict=conversation_text_dict, doc_id=doc_id, highlight_quote=quote),
+            ]
         )
-        return True, html.Div(body)
+        return True, body
