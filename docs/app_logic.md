@@ -2,7 +2,7 @@
 
 This doc contains info on the processing logic behind each of the 3 tabs in the QualFML app.
 
-NB the logic behind the research question tab is the most complex, so this is in its own doc: [docs/top_down_approach.md](docs/top_down_approach.md).
+NB the logic behind the research question tab is the most complex, so this is in its own doc: [docs/top_down_approach.md](top_down_approach.md).
 
 ## Data upload and processing
 
