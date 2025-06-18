@@ -1,3 +1,5 @@
+This doc contains detailed info on what happens in the research question answering tab of the app.
+
 # Overview of the process
 
 The diagram below represents what the process looks like **for each single RQ**.
