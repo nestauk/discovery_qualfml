@@ -35,6 +35,7 @@ theme:
 nav:
   - Home: docs/index.md
   - Deploying the app: docs/deploying_the_app.md
+  - App logic: docs/app_logic.md
   - Research question answering: docs/top_down_approach.md
 plugins:
   - same-dir
