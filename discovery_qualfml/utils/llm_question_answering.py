@@ -242,6 +242,7 @@ def create_batch_check_output_single_rq(
 
     batch_check_output_long = batch_check_output.explode("text")
     print(len(batch_check_output_long))
+    # remove hallucinated quotes
     batch_check_output_long = batch_check_output_long[~batch_check_output_long["text"].isin(unmatched_quotes)]
     print(len(batch_check_output_long))
 
