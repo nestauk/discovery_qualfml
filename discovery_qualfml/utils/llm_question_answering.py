@@ -14,7 +14,7 @@ from discovery_utils.utils.llm import batch_check
 from discovery_qualfml import PROJECT_DIR
 from discovery_qualfml.utils.dash_utils import get_or_create_output_dir
 
-PROMPT_PATH = PROJECT_DIR / "discovery_qualfml/utils/prompts/llm_check_system_a.txt"
+PROMPT_PATH = PROJECT_DIR / "discovery_qualfml/utils/prompts/research_question_prompt.txt"
 
 
 def parse_rqs(rq_text: str) -> Dict[str, str]:

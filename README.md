@@ -28,7 +28,7 @@ You will need to create a `.env` file in the root of the project directory with 
 ```
 VALID_USERNAME = # username for the app
 VALID_PASSWORD = # password for the app
-S3_BUCKET = # name of the s3 bucket to store outputs in (NOT CURRENTLY USED FOR THE APP)
+S3_BUCKET = # name of the s3 bucket to store outputs in (**NOT CURRENTLY USED FOR THE APP**)
 LLM_SERVICE=Azure
 AZURE_OPENAI_API_KEY=
 AZURE_OPENAI_ENDPOINT=
