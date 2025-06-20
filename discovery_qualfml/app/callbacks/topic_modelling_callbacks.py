@@ -12,12 +12,12 @@ import os
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
-from style import NESTA_COLOURS
 from typing import Any, Dict, List, Tuple, Optional
 
 from discovery_qualfml.utils.dash_utils import get_or_create_output_dir
 from discovery_qualfml.utils.topic_modelling import MODEL
 from discovery_qualfml.utils.topic_modelling import get_topics_and_summaries
+from discovery_qualfml.app.style import NESTA_COLOURS
 
 
 def register_topic_callbacks(app: Dash) -> None:

@@ -90,4 +90,4 @@ register_topic_callbacks(app)
 register_rq_callbacks(app)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", debug=False)  # set to True when developing locally
