@@ -1,3 +1,8 @@
+"""
+These utils generate metasummaries and illustrative quotes
+from the batch-checked quotes and answers to research questions.
+"""
+
 import os
 
 from typing import Dict

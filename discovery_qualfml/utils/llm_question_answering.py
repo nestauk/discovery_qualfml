@@ -1,3 +1,10 @@
+"""
+These utils are specific to getting an answer to each RQ for *each transcript/interview*
+in the data.
+
+For the part of the process that obtains summaries and key quotes, see `llm_summarize.py`
+"""
+
 from datetime import datetime
 import os
 from pathlib import Path

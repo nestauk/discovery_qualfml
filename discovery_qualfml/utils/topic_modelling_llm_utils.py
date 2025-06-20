@@ -1,3 +1,8 @@
+"""
+Utils specific to generating a name and description
+for each topic produced by BERTopic.
+"""
+
 import os
 
 from pathlib import Path
