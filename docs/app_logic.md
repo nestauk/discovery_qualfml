@@ -28,6 +28,16 @@ This process is represented in the diagram below.
 
 ## Topic modelling tab
 
+This tab allows the user to input a desired maximum number of topics, and then uses BERTopic to run a topic model on the data (`topic_modelling_data.csv`).
+
+The user journey is essentially:
+
+1. Set number of topics
+2. Click "Run"
+3. Wait for results...
+4. Get a high-level view of the topics from the table
+5. Explore the scatterplot: click on a point to see the topic name and description, and read the quote in the context of the full transcript below.
+
 ## Research question answering tab
 
 See [docs/top_down_approach.md](docs/top_down_approach.md)
