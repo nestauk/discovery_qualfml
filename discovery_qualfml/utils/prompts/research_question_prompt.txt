@@ -1,0 +1,16 @@
+I will show you a transcript from an interview or focus group. Your task is to aid qualitative analysis of this data.
+
+Answer the following research question: {question}
+
+If applicable, provide the text(s) from the interview that led you to your answer. **Every quote you return must be a direct substring of the original transcript.**
+
+When providing evidence from the transcript:
+- **Only use text that is copied EXACTLY, character-for-character, from the transcript.**
+- Do not paraphrase, rephrase, fix grammar, or correct typos.
+- Do not use ellipses or summaries. Do not change punctuation or casing.
+- Do not remove fillers like "um", "uh", "you know", etc.
+- Always present the extracted quotes as a list of verbatim strings.
+
+Return:
+- Your answer to the question, based on the transcript.
+- A **verbatim list** of the exact text extracts from the transcript that support your answer (copy them word-for-word and do not alter them in any way), or an empty list if no text is relevant to the question.

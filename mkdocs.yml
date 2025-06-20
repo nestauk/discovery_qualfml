@@ -1,0 +1,41 @@
+site_name: Discovery QualFML
+repo_name: nestauk/discovery_qualfml
+repo_url: https://github.com/nestauk/discovery_qualfml
+docs_dir: .
+extra_css:
+  - docs/style.css
+markdown_extensions:
+  - tables
+theme:
+  name: material
+  logo: docs/img/favicon.ico
+  favicon: docs/img/favicon.ico
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+  font:
+    text: Century Gothic
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: amber
+      accent: pink
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+nav:
+  - Home: docs/index.md
+  - Deploying the app: docs/deploying_the_app.md
+  - App logic: docs/app_logic.md
+  - Research question answering: docs/top_down_approach.md
+plugins:
+  - same-dir
