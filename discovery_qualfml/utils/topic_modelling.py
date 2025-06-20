@@ -1,3 +1,5 @@
+"""Utils for the thematic analysis / topic modelling tab"""
+
 from typing import Dict
 from typing import List
 from typing import Optional

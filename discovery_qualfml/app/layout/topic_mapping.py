@@ -10,7 +10,6 @@ topic_tab = html.Div(
     children=[
         dbc.Container(
             [
-                # html.H4("Topic Mapping"),
                 html.Div(
                     [
                         html.H5("How to use this tab", style={"color": "#0F294A", "marginBottom": "0.5rem"}),
